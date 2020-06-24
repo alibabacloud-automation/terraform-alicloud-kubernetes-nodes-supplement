@@ -1,21 +1,20 @@
-# terraform-alicloud-kubernetes-nodes-supplement
-Terraform Module for attaching more resources, like eips and so on, to kubernetes nodes on Alibaba Cloud.
+terraform-alicloud-kubernetes-nodes-supplement
+==============================================
 
-English | [简体中文](https://github.com/terraform-alicloud-modules/terraform-alicloud-kubernetes-nodes-supplement/blob/master/README-CN.md)
+本 Terraform Module 根据 Kubernetes 集群 ID，为集群内的节点实例绑定 EIP，并将 EIP 添加到共享宽带中。
 
-These types of resources are supported:
+本 Module 支持创建以下资源:
 
 * [EIP](https://www.terraform.io/docs/providers/alicloud/r/eip.html)
 * [EIP Association](https://www.terraform.io/docs/providers/alicloud/r/eip_association.html)
 * [Common Bandwidth Package](https://www.terraform.io/docs/providers/alicloud/r/common_bandwidth_package.html)
 * [Common Bandwidth Package Attachment](https://www.terraform.io/docs/providers/alicloud/r/common_bandwidth_package_attachment.html)
 
+## Terraform 版本
 
-## Terraform versions
+本模板要求使用版本 Terraform 0.12 和 阿里云 Provider 1.56.0+。
 
-The Module requires Terraform 0.12 and Terraform Provider AliCloud 1.56.0+.
-
-## Usage
+## 用法
 
 ```hcl
 module "k8s-cluster-eip" {
@@ -36,29 +35,29 @@ module "k8s-cluster-eip" {
 }
 ```
 
-## Examples
+## 示例
 
-* [complete](https://github.com/terraform-alicloud-modules/terraform-alicloud-kubernetes-nodes-supplement/tree/master/examples/complete)
+* [完整示例](https://github.com/terraform-alicloud-modules/terraform-alicloud-kubernetes-nodes-supplement/tree/master/examples/complete)
 
-## Notes
-* This module using AccessKey and SecretKey are from `profile` and `shared_credentials_file`.
-If you have not set them yet, please install [aliyun-cli](https://github.com/aliyun/aliyun-cli#installation) and configure it.
+## 注意事项
 
-Submit Issues
--------------
-If you have any problems when using this module, please opening a [provider issue](https://github.com/terraform-providers/terraform-provider-alicloud/issues/new) and let us know.
+* 本 Module 使用的 AccessKey 和 SecretKey 可以直接从 `profile` 和 `shared_credentials_file` 中获取。如果未设置，可通过下载安装 [aliyun-cli](https://github.com/aliyun/aliyun-cli#installation) 后进行配置。
 
-**Note:** There does not recommend to open an issue on this repo.
+提交问题
+-------
+如果在使用该 Terraform Module 的过程中有任何问题，可以直接创建一个 [Provider Issue](https://github.com/terraform-providers/terraform-provider-alicloud/issues/new)，我们将根据问题描述提供解决方案。
 
-Authors
+**注意:** 不建议在该 Module 仓库中直接提交 Issue。
+
+作者
 -------
 Created and maintained by Zhou qilin(z17810666992@163.com), He Guimin(@xiaozhu36, heguimin36@163.com).
 
-License
+参考
 ----
 Apache 2 Licensed. See LICENSE for full details.
 
-Reference
+许可
 ---------
 * [Terraform-Provider-Alicloud Github](https://github.com/terraform-providers/terraform-provider-alicloud)
 * [Terraform-Provider-Alicloud Release](https://releases.hashicorp.com/terraform-provider-alicloud/)
