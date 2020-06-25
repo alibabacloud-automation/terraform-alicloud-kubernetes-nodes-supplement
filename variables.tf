@@ -108,3 +108,8 @@ variable "kubernetes_cluster_id" {
   type        = string
   default     = ""
 }
+
+variable "number_of_kubernetes_nodes" {
+  description = "The number of the nodes within Kubernetes Cluster."
+  type        = number
+}
