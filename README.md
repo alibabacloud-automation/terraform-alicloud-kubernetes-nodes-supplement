@@ -23,7 +23,8 @@ module "k8s-cluster-eip" {
   region                   = "cn-beijing"
   profile                  = "Your-Profile-Name"
 
-  cluster_id               = "c5836d24951f149aab24e374ee130****"
+  cluster_id                 = "c5836d24951f149aab24e374ee130****"
+  number_of_kubernetes_nodes = 3
 
   // eip config
   eip_name                 = "test-k8s-eip"

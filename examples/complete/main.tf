@@ -14,7 +14,8 @@ provider "alicloud" {
 module "k8s-eip" {
   source = "../.."
 
-  kubernetes_cluster_id = "c5836d24951f149aab24e374ee130****"
+  kubernetes_cluster_id      = "c5836d24951f149aab24e374ee130****"
+  number_of_kubernetes_nodes = 3
 
   // eip config
   create_eip               = true
