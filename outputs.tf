@@ -1,8 +1,3 @@
-output "this_cluster_node_ids" {
-  description = "The list ids of the worker nodes."
-  value       = data.alicloud_instances.ecs.ids
-}
-
 output "this_eip_ids" {
   description = "The list ids of the eip."
   value       = alicloud_eip.eip.*.id

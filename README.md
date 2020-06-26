@@ -17,8 +17,29 @@ The Module requires Terraform 0.12 and Terraform Provider AliCloud 1.56.0+.
 
 ## Usage
 
+Bind EIP to cluster node by instance ids and join the Common Bandwidth Package.
 ```hcl
-module "k8s-cluster-eip" {
+module "k8s_node_ids-eip" {
+  source                   = "terraform-alicloud-modules/kubernetes-nodes-supplement/alicloud"
+  region                   = "cn-beijing"
+  profile                  = "Your-Profile-Name"
+
+  kubernetes_node_ids      = ["i-2ze0smzw7rfxi4a9****", "i-2ze0smzw7rfxi4a9****", "i-2ze0smzw7rfxi4a9****"]
+  // eip config
+  create_eip               = true
+  eip_name                 = "test-k8s-eip"
+  eip_instance_charge_type = "PostPaid"
+
+  // common bandwidth package config
+  create_cbp               = true
+  cbp_bandwidth            = 10
+  cbp_internet_charge_type = "PayByTraffic"
+}
+```
+
+Bind EIP to cluster node by Kubernetes Cluster id and join the Common Bandwidth Package.
+```hcl
+module "k8s_cluster_id-eip" {
   source                   = "terraform-alicloud-modules/kubernetes-nodes-supplement/alicloud"
   region                   = "cn-beijing"
   profile                  = "Your-Profile-Name"
