@@ -16,6 +16,27 @@ terraform-alicloud-kubernetes-nodes-supplement
 
 ## 用法
 
+传入 Kubernetes nodes 的实例 ID 进行绑定 EIP 并加入共享带宽。
+```hcl
+module "k8s_node_ids-eip" {
+  source                   = "terraform-alicloud-modules/kubernetes-nodes-supplement/alicloud"
+  region                   = "cn-beijing"
+  profile                  = "Your-Profile-Name"
+
+  kubernetes_node_ids      = ["i-2ze0smzw7rfxi4a9****", "i-2ze0smzw7rfxi4a9****", "i-2ze0smzw7rfxi4a9****"]
+  // eip config
+  create_eip               = true
+  eip_name                 = "test-k8s-eip"
+  eip_instance_charge_type = "PostPaid"
+
+  // common bandwidth package config
+  create_cbp               = true
+  cbp_bandwidth            = 10
+  cbp_internet_charge_type = "PayByTraffic"
+}
+```
+
+传入 Kubernetes Cluster 实例 ID，为集群内的 ECS 实例绑定 EIP 并加入共享带宽。
 ```hcl
 module "k8s-cluster-eip" {
   source                   = "terraform-alicloud-modules/kubernetes-nodes-supplement/alicloud"

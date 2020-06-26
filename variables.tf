@@ -112,4 +112,11 @@ variable "kubernetes_cluster_id" {
 variable "number_of_kubernetes_nodes" {
   description = "The number of the nodes within Kubernetes Cluster."
   type        = number
+  default     = 0
+}
+
+variable "kubernetes_node_ids" {
+  description = "The list ids of kubernetes node."
+  type        = list(string)
+  default     = []
 }
