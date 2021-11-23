@@ -10,18 +10,12 @@ terraform-alicloud-kubernetes-nodes-supplement
 * [Common Bandwidth Package](https://www.terraform.io/docs/providers/alicloud/r/common_bandwidth_package.html)
 * [Common Bandwidth Package Attachment](https://www.terraform.io/docs/providers/alicloud/r/common_bandwidth_package_attachment.html)
 
-## Terraform 版本
-
-本模板要求使用版本 Terraform 0.12 和 阿里云 Provider 1.56.0+。
-
 ## 用法
 
 传入 Kubernetes nodes 的实例 ID 进行绑定 EIP 并加入共享带宽。
 ```hcl
 module "k8s_node_ids-eip" {
   source                   = "terraform-alicloud-modules/kubernetes-nodes-supplement/alicloud"
-  region                   = "cn-beijing"
-  profile                  = "Your-Profile-Name"
 
   kubernetes_node_ids      = ["i-2ze0smzw7rfxi4a9****", "i-2ze0smzw7rfxi4a9****", "i-2ze0smzw7rfxi4a9****"]
   // eip config
@@ -40,8 +34,6 @@ module "k8s_node_ids-eip" {
 ```hcl
 module "k8s-cluster-eip" {
   source                   = "terraform-alicloud-modules/kubernetes-nodes-supplement/alicloud"
-  region                   = "cn-beijing"
-  profile                  = "Your-Profile-Name"
 
   cluster_id                 = "c5836d24951f149aab24e374ee130****"
   number_of_kubernetes_nodes = 3
@@ -62,8 +54,74 @@ module "k8s-cluster-eip" {
 * [完整示例](https://github.com/terraform-alicloud-modules/terraform-alicloud-kubernetes-nodes-supplement/tree/master/examples/complete)
 
 ## 注意事项
+本Module从版本v1.3.0开始已经移除掉如下的 provider 的显示设置：
 
-* 本 Module 使用的 AccessKey 和 SecretKey 可以直接从 `profile` 和 `shared_credentials_file` 中获取。如果未设置，可通过下载安装 [aliyun-cli](https://github.com/aliyun/aliyun-cli#installation) 后进行配置。
+```hcl
+provider "alicloud" {
+  profile                 = var.profile != "" ? var.profile : null
+  shared_credentials_file = var.shared_credentials_file != "" ? var.shared_credentials_file : null
+  region                  = var.region
+  skip_region_validation  = var.skip_region_validation
+  configuration_source    = "terraform-alicloud-modules/kubernetes-nodes-supplement"
+}
+```
+
+如果你依然想在Module中使用这个 provider 配置，你可以在调用Module的时候，指定一个特定的版本，比如 1.2.0:
+
+```hcl
+module "k8s_node_ids-eip" {
+  source     = "terraform-alicloud-modules/kubernetes-nodes-supplement/alicloud"
+  version    = "1.2.0"
+  region     = "cn-beijing"
+  profile    = "Your-Profile-Name"
+  create_eip = true
+  eip_name   = "test-k8s-eip"
+  // ...
+}
+```
+
+如果你想对正在使用中的Module升级到 1.3.0 或者更高的版本，那么你可以在模板中显示定义一个系统过Region的provider：
+```hcl
+provider "alicloud" {
+  region  = "cn-beijing"
+  profile = "Your-Profile-Name"
+}
+module "k8s_node_ids-eip" {
+  source     = "terraform-alicloud-modules/kubernetes-nodes-supplement/alicloud"
+  create_eip = true
+  eip_name   = "test-k8s-eip"
+  // ...
+}
+```
+或者，如果你是多Region部署，你可以利用 `alias` 定义多个 provider，并在Module中显示指定这个provider：
+
+```hcl
+provider "alicloud" {
+  region  = "cn-beijing"
+  profile = "Your-Profile-Name"
+  alias   = "bj"
+}
+module "k8s_node_ids-eip" {
+  source     = "terraform-alicloud-modules/kubernetes-nodes-supplement/alicloud"
+  providers         = {
+    alicloud = alicloud.bj
+  }
+  create_eip = true
+  eip_name   = "test-k8s-eip"
+  // ...
+}
+```
+
+定义完provider之后，运行命令 `terraform init` 和 `terraform apply` 来让这个provider生效即可。
+
+更多provider的使用细节，请移步[How to use provider in the module](https://www.terraform.io/docs/language/modules/develop/providers.html#passing-providers-explicitly)
+
+## Terraform 版本
+
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.12.0 |
+| <a name="requirement_alicloud"></a> [alicloud](#requirement\_alicloud) | >= 1.56.0 |
 
 提交问题
 -------
@@ -73,7 +131,7 @@ module "k8s-cluster-eip" {
 
 作者
 -------
-Created and maintained by Zhou qilin(z17810666992@163.com), He Guimin(@xiaozhu36, heguimin36@163.com).
+Created and maintained by Alibaba Cloud Terraform Team(terraform@alibabacloud.com)
 
 参考
 ----
