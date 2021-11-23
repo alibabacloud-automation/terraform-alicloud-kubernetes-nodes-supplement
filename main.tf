@@ -1,11 +1,3 @@
-provider "alicloud" {
-  profile                 = var.profile != "" ? var.profile : null
-  shared_credentials_file = var.shared_credentials_file != "" ? var.shared_credentials_file : null
-  region                  = var.region
-  skip_region_validation  = var.skip_region_validation
-  configuration_source    = "terraform-alicloud-modules/kubernetes-nodes-supplement"
-}
-
 data "alicloud_instances" "ecs" {
   name_regex = "worker-k8s-for-cs-${var.kubernetes_cluster_id}"
 }
