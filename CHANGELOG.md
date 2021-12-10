@@ -1,4 +1,9 @@
-## 1.3.0 (Unreleased)
+## 1.4.0 (Unreleased)
+## 1.3.0 (December 10, 2021)
+
+ENHANCEMENTS:
+
+- Removes the provider setting and improves the Readme [GH-5](https://github.com/terraform-alicloud-modules/terraform-alicloud-kubernetes-nodes-supplement/pull/5)
 
 ## 1.2.0 (Jun 26, 2020)
 
