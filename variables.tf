@@ -67,7 +67,7 @@ variable "eip_tags" {
 variable "eip_isp" {
   description = "The line type of the Elastic IP instance."
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "resource_group_id" {
