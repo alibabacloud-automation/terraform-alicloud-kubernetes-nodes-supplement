@@ -5,10 +5,10 @@ data "alicloud_instances" "ecs" {
 resource "alicloud_eip" "eip" {
   count = var.create_eip ? length(var.kubernetes_node_ids) > 0 ? length(var.kubernetes_node_ids) : var.number_of_kubernetes_nodes : 0
 
-  name                 = length(var.kubernetes_node_ids) > 1 ? format("%s%03d", var.eip_name, count.index + 1) : var.eip_name
+  address_name         = length(var.kubernetes_node_ids) > 1 ? format("%s%03d", var.eip_name, count.index + 1) : var.eip_name
   bandwidth            = var.create_cbp ? var.cbp_bandwidth : var.eip_bandwidth
   internet_charge_type = var.eip_internet_charge_type
-  instance_charge_type = var.eip_instance_charge_type
+  payment_type         = var.eip_instance_charge_type
   period               = var.eip_period
   isp                  = var.eip_isp
   resource_group_id    = var.resource_group_id
@@ -30,12 +30,12 @@ resource "alicloud_eip_association" "eip" {
 }
 
 resource "alicloud_common_bandwidth_package" "cbp" {
-  count                = var.create_cbp ? 1 : 0
-  bandwidth            = var.cbp_bandwidth
-  name                 = "cbp-k8s"
-  internet_charge_type = var.cbp_internet_charge_type
-  ratio                = var.cbp_ratio
-  depends_on           = [alicloud_eip.eip]
+  count                  = var.create_cbp ? 1 : 0
+  bandwidth              = var.cbp_bandwidth
+  bandwidth_package_name = "cbp-k8s"
+  internet_charge_type   = var.cbp_internet_charge_type
+  ratio                  = var.cbp_ratio
+  depends_on             = [alicloud_eip.eip]
 
 }
 
