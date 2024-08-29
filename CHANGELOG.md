@@ -1,4 +1,8 @@
-## 1.4.0 (Unreleased)
+## 1.5.0 (Unreleased)
+## 1.4.0 (August 29, 2024)
+
+- module: improve deprecated attributed; example/complete: improve the examples [GH-6](https://github.com/alibabacloud-automation/terraform-alicloud-kubernetes-nodes-supplement/pull/6)
+
 ## 1.3.0 (December 10, 2021)
 
 ENHANCEMENTS:
