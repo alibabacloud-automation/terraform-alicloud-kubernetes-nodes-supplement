@@ -2,28 +2,9 @@ provider "alicloud" {
   region = var.region
 }
 
-variable "region" {
-  default = "cn-zhangjiakou"
-}
-
-
-variable "name" {
-  default = "my-first-kubernetes-demo"
-}
-
-variable "log_project_name" {
-  default = "my-first-kubernetes-sls-demo"
-}
 
 data "alicloud_zones" "default" {
   available_resource_creation = "VSwitch"
-}
-
-data "alicloud_instance_types" "default" {
-  availability_zone    = data.alicloud_zones.default.zones[0].id
-  cpu_core_count       = 2
-  memory_size          = 4
-  kubernetes_node_role = "Worker"
 }
 
 resource "alicloud_vpc" "default" {
@@ -64,19 +45,19 @@ resource "alicloud_cs_kubernetes_node_pool" "default" {
   }
 }
 
-// Bind EIP to cluster node by Kubernetes Cluster id and join the Common Bandwidth Package.
+# Bind EIP to cluster node by Kubernetes Cluster id and join the Common Bandwidth Package.
 module "k8s_cluster-eip" {
   source = "../.."
 
   kubernetes_cluster_id      = alicloud_cs_managed_kubernetes.default.id
   number_of_kubernetes_nodes = 2
 
-  // eip config
+  # eip config
   create_eip               = true
   eip_name                 = "test-k8s-eip"
   eip_instance_charge_type = "PayAsYouGo"
 
-  // common bandwidth package config
+  # common bandwidth package config
   create_cbp               = true
   cbp_bandwidth            = 10
   cbp_internet_charge_type = "PayByTraffic"
