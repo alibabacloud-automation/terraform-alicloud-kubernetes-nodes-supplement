@@ -1,3 +1,14 @@
+## [2.0.0](https://github.com/alibabacloud-automation/terraform-alicloud-kubernetes-nodes-supplement/compare/v1.4.0...v2.0.0) (2026-04-22)
+
+
+### ⚠ BREAKING CHANGES
+
+* add provider version constraint for aliyun/alicloud
+
+### Features
+
+* add provider version constraint for aliyun/alicloud ([721c127](https://github.com/alibabacloud-automation/terraform-alicloud-kubernetes-nodes-supplement/commit/721c127695c3eb69d81a728245d6b2cd4319984b))
+
 ## 1.5.0 (Unreleased)
 ## 1.4.0 (August 29, 2024)
 
